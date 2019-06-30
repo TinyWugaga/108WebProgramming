@@ -23,9 +23,10 @@ export default class ReactApp extends React.Component {
     }
  
     render() {
+        const students = this.state.students
         return (
                 <div>
-                  <StudentList students={this.state.students}/>
+                  <StudentList key={students.student_id} students={students}/>
                 </div>
             )
     }
