@@ -1,20 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Axios} from './config/axios'
 
-function App() {
-  return (
-    <div className="App">
-      <header>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a>
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import StudentList from './student-list.jsx'
+
+export default class ReactApp extends React.Component {
+ 
+    constructor(props) {
+        super(props);
+        this.state = {students: []};
+      }
+ 
+    componentDidMount() {
+        let _this = this;
+        Axios.get('/students')
+          .then(function (response) {
+             console.log(response);
+            _this.setState({students: response.data});
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+ 
+    render() {
+        return (
+                <div>
+                  <StudentList students={this.state.students}/>
+                </div>
+            )
+    }
 }
-
-export default App;
